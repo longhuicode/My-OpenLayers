@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>01mapOnPage</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.3.3/css/ol.css" type="text/css">
+    <!-- 如果要在旧版平台（如Internet Explorer或Android 4.x）上运行，则需要在ol.js之前引入这个脚本 -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.3.3/build/ol.js" type="text/javascript"></script>
+    <style>
+        .map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<h2>My Map</h2>
+<div id="map" class="map"></div>
+<script type="text/javascript">
+
+    var map = new ol.Map({
+        target: 'map',  //目标容器
+        layers: [   //一个或多个图层
+            new ol.layer.Tile({ //这里指定为瓦片图
+                source: new ol.source.OSM() //指定图层数据源
+            })
+        ],
+        view: new ol.View({ //视图
+            center: ol.proj.fromLonLat([0, 0]),  //视图中心点
+            zoom: 3 //视图缩放级别
+        })
+    });
+</script>
+</body>
+</html>
