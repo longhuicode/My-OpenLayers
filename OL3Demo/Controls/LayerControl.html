@@ -46,15 +46,6 @@
             list-style:none;
             margin:5px 10px;
         }
-        /* 鼠标位置控件层样式设置 */
-        #mouse-position{
-            float:left;
-            position:absolute;
-            bottom:5px;
-            width:200px;
-            height:20px;
-            z-index:2000;   /*在地图容器中的层，要设置z-index的值让其显示在地图上层*/
-        }
     </style>
 </head>
 <body>
@@ -107,17 +98,31 @@
         }
     }
 
+    /*
+    * 为checkbox元素绑定变更事件
+    * @param { input } element checkbox元素
+    * @param { ol.layer.Layer } layer 图层对象
+    */
+    function addChangeEvent(element, layer){
+        element.onclick = function () {
+            if(element.checked){
+                layer.setVisible(true);//设置显示图层
+            }else {
+                layer.setVisible(false);//设置不显示图层
+            }
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
+    /*
+    * 动态兼容设置元素文本
+    * */
+    function setInnerText(element, text){
+        if(typeof element.textContent == "string"){
+            element.textContent = text;
+        }else {
+            element.innerText = text;
+        }
+    }
 
     //实例化Map对象加载地图
     var map = new ol.Map({
@@ -127,7 +132,30 @@
             //加载瓦片图层数据
             new ol.layer.Tile({
                 //图层对应数据源,这里是加载OpenStreetMap在线瓦片数据
-                source: new ol.source.OSM()
+                source: new ol.source.OSM(),
+                name: '世界地图(OSM瓦片)'
+            }),
+            new ol.layer.Tile({
+                source: new ol.source.MapQuest({
+                    layer: 'sat'
+                }),
+                name: '世界地图(MapQuest影响)'
+            }),
+            new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    url: '../data/geojson/countries.geojson',
+                    format: new ol.format.GeoJSON()
+                }),
+                name: '国界(JSON格式的矢量图)'
+            }),
+            new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    url: '../data/kml/2012_Earthquakes_Mag5.kml',
+                    format: new ol.format.KML({
+                        extractStyles: false
+                    })
+                }),
+                name: '点(KML格式矢量图)'
             })
         ],
         //地图视图设置
@@ -136,6 +164,8 @@
             zoom: 2//地图初始化显示级别
         })
     });
+    //加载图层列表中的数据
+    loadLayersControl(map, "layerTree");
 </script>
 </body>
 </html>
