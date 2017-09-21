@@ -2,42 +2,80 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>加载并显示OSM地图</title>
-    <link href="css/ol.css" rel="stylesheet" type="text/css" />
-    <script src="libs/ol/ol-debug.js" type="text/javascript"></script>
+    <title>加载鼠标位置控件</title>
+    <link href="../css/ol.css" rel="stylesheet" type="text/css" />
+    <script src="../libs/ol/ol-debug.js" type="text/javascript"></script>
     <style type="text/css">
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
 
-        #map{
+        #map {
             width: 100%;
             height: 100%;
             position: absolute;
         }
+
+        /*鼠标位置控件层样式设置*/
+        #mouse-position {
+            float: left;
+            position: absolute;
+            bottom: 5px;
+            width: 200px;
+            height: 20px;
+            z-index: 2001;
+        }
+
+        /*鼠标位置信息自定义样式设置*/
+        .custom-mouse-position {
+            color: red;
+            font-size: 16px;
+            font-family: "微软雅黑";
+        }
     </style>
 </head>
 <body>
-<div id="map"></div>
-<script type="text/javascript">
-    //实例化Map对象加载地图
-    var map = new ol.Map({
-        target: 'map',//地图容器div的ID
-        //地图容器中加载的图层
-        layers: [
-            //加载瓦片图层数据
-            new ol.layer.Tile({
-                //图层对应数据源,这里是加载OpenStreetMap在线瓦片数据
-                source: new ol.source.OSM()
-            })
-        ],
-        //地图视图设置
-        view: new ol.View({
-            center: [0, 0],//地图初始中心点
-            zoom: 2//地图初始化显示级别
-        })
-    });
-</script>
+    <div id="map">
+        <div id="mouse-position"></div>
+    </div>
+    <script type="text/javascript">
+
+        //实例化鼠标位置控件(MousePosition)
+        var mousePositionControl = new ol.control.MousePosition({
+            coordinateFormat: ol.coordinate.createStringXY(4), //设置坐标格式
+            projection: 'EPSG:4326', //地图投影坐标系
+            className: 'custom-mouse-position', //坐标信息显示样式
+            //显示鼠标位置信息的目标容器
+            target: document.getElementById('mouse-position'),
+            undefinedHTML: '&nbsp;'
+        });
+
+        //实例化Map对象加载地图
+        var map = new ol.Map({
+            target: 'map',//地图容器div的ID
+            //地图容器中加载的图层
+            layers: [
+                //加载瓦片图层数据
+                new ol.layer.Tile({
+                    //图层对应数据源,这里是加载OpenStreetMap在线瓦片数据
+                    source: new ol.source.OSM()
+                })
+            ],
+            //地图视图设置
+            view: new ol.View({
+                center: [0, 0],//地图初始中心点
+                zoom: 2//地图初始化显示级别
+            }),
+            //加载控件到地图容器中
+            //加载鼠标位置控件
+            controls: ol.control.defaults({
+                //地图中默认控件
+                attributionOptions: ({
+                    collapsible: false //地图数据源信息控件是否可展开,默认为true
+                })
+            }).extend([mousePositionControl])//加载鼠标位置控件
+        });
+    </script>
 </body>
 </html>
