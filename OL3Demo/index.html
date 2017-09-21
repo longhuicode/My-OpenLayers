@@ -25,19 +25,20 @@
         var map = new ol.Map({
             target: 'map',//地图容器div的ID
             //地图容器中加载的图层
-            layers: [
-                //加载瓦片图层数据
-                new ol.layer.Tile({
-                    //图层对应数据源,这里是加载OpenStreetMap在线瓦片数据
-                    source: new ol.source.OSM()
-                })
-            ],
+            layers: [],
             //地图视图设置
             view: new ol.View({
                 center: [0, 0],//地图初始中心点
                 zoom: 2//地图初始化显示级别
             })
         });
+
+        //实例化OSM瓦片图地图的瓦片图层
+        var tileLayer = new ol.layer.Tile({
+            source: new ol.source.OSM()
+        });
+        //加载瓦片图层到地图容器中
+        map.addLayer(tileLayer);
     </script>
 </body>
 </html>
