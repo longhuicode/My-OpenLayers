@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" xmlns=http://www.w3.org/1999/xhtml>
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta content=always name=referrer>
+    <title>定制地图logo</title>
+    <link href="libs/ol/ol.css" rel="stylesheet" type="text/css"/>
+    <script src="libs/ol/ol-debug.js" type="text/javascript"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        #map{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    new ol.Map({
+        controls: ol.control.defaults({
+            attributionOptions: ({
+                collapsible: false //右下角logo/授权声明是否折叠
+            })
+        }),
+        // logo: false,     // 不显示logo
+        // logo: 'face_monkey.png',     // 用一个图片 face_monkey.png 作为logo
+        logo: {src: 'images/logo.jpg', href: 'http://www.fundway.net/'},    // 点击能跳转到对应页面
+        layers: [
+            new ol.layer.Tile({source: new ol.source.OSM()})
+        ],
+        view: new ol.View({
+            center: [0, 0],
+            zoom: 2
+        }),
+        target: 'map'
+    });
+</script>
+</body>
+</html>
