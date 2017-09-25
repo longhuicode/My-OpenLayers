@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" xmlns=http://www.w3.org/1999/xhtml>
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta content=always name=referrer>
+    <title>OpenLayers3 地图基础示例</title>
+    <link href="libs/ol/ol.css" rel="stylesheet" type="text/css"/>
+    <script src="libs/ol/ol-debug.js" type="text/javascript"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        #map{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    // Open Street Map 地图层
+    var openStreetMapLayer = new ol.layer.Tile({
+       source: new ol.source.XYZ({
+           url: "http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+       })
+    });
+
+    // 高德地图层
+    var gaodeMapLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url:'http://webst0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}'
+        })
+    });
+
+    // yahoo地图层
+    var yahooMapLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            tileSize: 512,
+            url:'https://{0-3}.base.maps.api.here.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/512/png8?lg=ENG&ppi=250&token=TrLJuXVK62IQk0vuXFzaig%3D%3D&requestid=yahoo.prod&app_id=eAdkWGYRoc4RfxVo0Z4B'
+        })
+    });
+
+    // 百度地图层
+    // 自定义分辨率和瓦片坐标系
+    var resolutions = [];
+    var maxZoom = 18;
+
+    // 计算百度使用的分辨率
+    for(var i=0; i<=maxZoom; i++){
+        resolutions[i] = Math.pow(2, maxZoom-i);
+    }
+    var tilegrid  = new ol.tilegrid.TileGrid({
+        origin: [0,0],    // 设置原点坐标
+        resolutions: resolutions    // 设置分辨率
+    });
+
+    // 创建百度地图的数据源
+    var baiduSource = new ol.source.TileImage({
+        projection: 'EPSG:3857',
+        tileGrid: tilegrid,
+        tileUrlFunction: function(tileCoord, pixelRatio, proj){
+            var z = tileCoord[0];
+            var x = tileCoord[1];
+            var y = tileCoord[2];
+
+            // 百度瓦片服务url将负数使用M前缀来标识
+            if(x<0){
+                x = 'M' + (-x);
+            }
+            if(y<0){
+                y = 'M' + (-y);
+            }
+
+            return "http://online0.map.bdimg.com/onlinelabel/?qt=tile&x="+x+"&y="+y+"&z="+z+"&styles=pl&udt=20160426&scaler=1&p=0";
+        }
+    });
+
+    // 百度地图层
+    var baiduMapLayer2 = new ol.layer.Tile({
+        source: baiduSource
+    });
+
+    // Bing中文地图层
+    var bingMapLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            tileUrlFunction: function(tileCoord){
+                var z = tileCoord[0];
+                var x = tileCoord[1];
+                var y = -tileCoord[2] - 1;
+                var result='', zIndex=0;
+
+                for(; zIndex<z; zIndex++) {
+                    result = ((x&1)+2*(y&1)).toString() + result;
+                    x >>= 1;
+                    y >>= 1;
+                }
+                return 'http://dynamic.t0.tiles.ditu.live.com/comp/ch/' + result + '?it=G,VE,BX,L,LA&mkt=zh-cn,syr&n=z&og=111&ur=CN';
+            }
+        })
+    });
+
+    // google地图层
+    var googleMapLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url:'http://www.google.cn/maps/vt/pb=!1m4!1m3!1i{z}!2i{x}!3i{y}!2m3!1e0!2sm!3i345013117!3m8!2szh-CN!3scn!5e1105!12m4!1e68!2m2!1sset!2sRoadmap!4e0'
+        })
+    });
+
+    // 创建地图
+    var map = new ol.Map({
+        // 设置地图图层
+        layers: [googleMapLayer],
+        // 设置显示地图的视图
+        view: new ol.View({
+            center: [104.06, 30.67],    // 定义地图显示中心于经度0度，纬度0度处
+            projection: "EPSG:4326",
+            zoom: 10            // 并且定义地图显示层级为2
+        }),
+        // 让id为map的div作为地图的容器
+        target: 'map'
+    });
+</script>
+</body>
+</html>
