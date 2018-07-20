@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="100" height="100" enable-background="new 0 0 100 100" xml:space="preserve">
+<line fill="none" stroke="#231815" stroke-width="0.216" stroke-miterlimit="22.9256" x1="101.7" y1="104" x2="-1.7" y2="104"/>
+<ellipse id="白底" fill="#FFFFFF" cx="49.9" cy="50" rx="42.9" ry="43.5"/>
+<path fill="#E41E26" d="M50,0.4c27.1,0,49.3,22.1,49.3,49.3S77.1,99,50,99S0.7,76.8,0.7,49.7C0.7,22.6,22.9,0.4,50,0.4L50,0.4z
+	 M21.5,17.6l62.3,58.6c5.7-7.3,9.2-16.5,9.2-26.5c0-23.7-19.3-43-43-43C39.1,6.7,29.1,10.9,21.5,17.6L21.5,17.6z M78.9,81.5
+	L16.5,22.9C10.6,30.3,7,39.6,7,49.7c0,23.7,19.3,43,43,43C61.1,92.7,71.2,88.4,78.9,81.5z"/>
+<line fill="none" stroke="#E51E25" stroke-width="0.216" stroke-miterlimit="2.4142" x1="77.3" y1="82.1" x2="18.2" y2="27.9"/>
+<line fill="none" stroke="#E51E25" stroke-width="0.216" stroke-miterlimit="2.4142" x1="23.3" y1="23.1" x2="82.4" y2="77"/>
+<polygon fill="#231815" stroke="#231815" stroke-width="3.685039e-003" stroke-miterlimit="2.4142" points="47.7,76.5 47.6,34.1 
+	52.5,40.4 52.5,30.9 41.9,21 32.2,31 32.2,40.2 38.1,34.2 38.1,76.6 "/>
+<path fill="#231815" stroke="#231815" stroke-width="0.216" stroke-miterlimit="2.4142" d="M68.2,45.6h-9.5l5.3,5.1h-9.8
+	c-4,0.1-6.9,1.8-9,4.8l0.2,13.3c1.5-3.3,4.2-9.1,9.2-8l9.1,0l-5.3,5.3h10L79,55.5L68.2,45.6L68.2,45.6z"/>
+</svg>
